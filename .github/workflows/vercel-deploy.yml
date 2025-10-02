@@ -31,6 +31,14 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Ensure pnpm on PATH (fallback)
+        shell: bash
+        run: |
+          if ! command -v pnpm >/dev/null 2>&1; then
+            npm i -g pnpm@9
+          fi
+          pnpm -v
+
       - name: Install dependencies (pnpm)
         run: pnpm install --frozen-lockfile || pnpm install
 
