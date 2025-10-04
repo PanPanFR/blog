@@ -5,7 +5,8 @@ import { BlogCard } from "@/components/blog-card";
 import { AnimatedTagFilter } from "@/components/animated-tag-filter";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
-interface BlogData {
+interface BlogPageData {
+  url: string;
   title: string;
   description: string;
   date: string;
@@ -17,16 +18,11 @@ interface BlogData {
   thumbnail?: string;
 }
 
-interface BlogPage {
-  url: string;
-  data: BlogData;
-}
-
 interface HomePageClientProps {
   allTags: string[];
   selectedTag: string;
   tagCounts: Record<string, number>;
-  paginatedBlogs: BlogPage[];
+  paginatedBlogs: BlogPageData[];
   currentPage: number;
   totalPages: number;
   filteredBlogsLength: number;
@@ -93,17 +89,17 @@ export function HomePageClient({
             }`}
           >
             {paginatedBlogs.map((blog, index) => {
-              const date = new Date(blog.data.date);
+              const date = new Date(blog.date);
               const formattedDate = formatDate(date);
 
               return (
                 <BlogCard
                   key={blog.url}
                   url={blog.url}
-                  title={blog.data.title}
-                  description={blog.data.description}
+                  title={blog.title}
+                  description={blog.description}
                   date={formattedDate}
-                  thumbnail={blog.data.thumbnail}
+                  thumbnail={blog.thumbnail}
                   showRightBorder={paginatedBlogs.length < 3}
                   priority={index === 0}
                   loading={index === 0 ? "eager" : "lazy"}

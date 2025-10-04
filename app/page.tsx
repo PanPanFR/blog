@@ -75,12 +75,26 @@ export default async function HomePage({
     return acc;
   }, {} as Record<string, number>);
 
+  // Serialize blog data for client component
+  const serializedBlogs = paginatedBlogs.map(blog => ({
+    url: blog.url,
+    title: blog.data.title,
+    description: blog.data.description,
+    date: blog.data.date,
+    tags: blog.data.tags,
+    featured: blog.data.featured,
+    readTime: blog.data.readTime,
+    author: blog.data.author,
+    authorImage: blog.data.authorImage,
+    thumbnail: blog.data.thumbnail,
+  }));
+
   return (
     <HomePageClient
       allTags={allTags}
       selectedTag={selectedTag}
       tagCounts={tagCounts}
-      paginatedBlogs={paginatedBlogs}
+      paginatedBlogs={serializedBlogs}
       currentPage={currentPage}
       totalPages={totalPages}
       filteredBlogsLength={filteredBlogs.length}
