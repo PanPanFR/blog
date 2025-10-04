@@ -143,10 +143,31 @@
   }
   body {
     @apply bg-background text-foreground;
+    transition: var(--theme-transition);
+  }
+
+  /* Smooth theme transitions */
+  html[style*="--theme-transition"] *,
+  html[style*="--theme-transition"] *::before,
+  html[style*="--theme-transition"] *::after {
+    transition: var(--theme-transition) !important;
+    transition-delay: 0s !important;
   }
 
   .shiki > div > button {
     border-top-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

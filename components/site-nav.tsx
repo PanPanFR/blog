@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { SmoothThemeToggle } from "@/components/smooth-theme-toggle";
 
 export function SiteNav() {
   return (
@@ -21,7 +21,7 @@ export function SiteNav() {
 
         <div className="flex flex-1 w-full justify-end">
           <nav className="flex items-center">
-            <ThemeToggle />
+            <SmoothThemeToggle />
           </nav>
         </div>
       </div>

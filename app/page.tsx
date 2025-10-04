@@ -3,7 +3,7 @@ import { loader } from "fumadocs-core/source";
 import { createMDXSource } from "fumadocs-mdx";
 import { Suspense } from "react";
 import { BlogCard } from "@/components/blog-card";
-import { TagFilter } from "@/components/tag-filter";
+import { AnimatedTagFilter } from "@/components/animated-tag-filter";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 interface BlogData {
@@ -110,7 +110,7 @@ export default async function HomePage({
         </div>
         {allTags.length > 0 && (
           <div className="max-w-7xl mx-auto w-full">
-            <TagFilter
+            <AnimatedTagFilter
               tags={allTags}
               selectedTag={selectedTag}
               tagCounts={tagCounts}
@@ -141,6 +141,7 @@ export default async function HomePage({
                   showRightBorder={paginatedBlogs.length < 3}
                   priority={index === 0}
                   loading={index === 0 ? "eager" : "lazy"}
+                  index={index}
                 />
               );
             })}
