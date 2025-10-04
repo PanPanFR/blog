@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface BlogCardProps {
   url: string;
@@ -26,28 +25,13 @@ export function BlogCard({
   loading = "lazy",
   index = 0,
 }: BlogCardProps) {
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: index * 0.1,
-        ease: "easeOut" as const,
-      },
-    },
-  };
   return (
-    <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      animate="visible"
-      whileHover={{ 
-        y: -8,
-        transition: { duration: 0.2 } 
+    <div 
+      className="h-full animate-fade-up hover:-translate-y-2 transition-all duration-300 ease-out"
+      style={{ 
+        animationDelay: `${index * 100}ms`,
+        animationFillMode: 'both'
       }}
-      className="h-full"
     >
       <Link
         href={url}
@@ -59,11 +43,7 @@ export function BlogCard({
         <div className="flex flex-col h-full">
         {thumbnail && (
           <div className="relative w-full h-48 overflow-hidden">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="w-full h-full"
-            >
+            <div className="w-full h-full transition-transform duration-300 hover:scale-105">
               <Image
                 src={thumbnail}
                 alt={title}
@@ -73,18 +53,14 @@ export function BlogCard({
                 priority={priority}
                 loading={loading}
               />
-            </motion.div>
+            </div>
           </div>
         )}
 
         <div className="p-6 flex flex-col gap-2 flex-grow">
-          <motion.h3 
-            className="text-xl font-semibold text-card-foreground group-hover:underline underline-offset-4"
-            whileHover={{ x: 4 }}
-            transition={{ duration: 0.2 }}
-          >
+          <h3 className="text-xl font-semibold text-card-foreground group-hover:underline underline-offset-4 transition-transform duration-200 group-hover:translate-x-1">
             {title}
-          </motion.h3>
+          </h3>
           <p className="text-muted-foreground text-sm flex-grow">{description}</p>
           <time className="block text-sm font-medium text-muted-foreground mt-auto">
             {date}
@@ -92,6 +68,6 @@ export function BlogCard({
         </div>
       </div>
     </Link>
-    </motion.div>
+    </div>
   );
 }

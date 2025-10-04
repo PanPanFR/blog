@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface AnimatedTagFilterProps {
@@ -29,94 +28,78 @@ export function AnimatedTagFilter({ tags, selectedTag, tagCounts }: AnimatedTagF
     router.push(newUrl);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 300,
-        damping: 20,
-      },
-    },
-  };
-
   // Limit tags to prevent overcrowding
   const displayTags = tags.slice(0, 8); // Show max 8 tags
   
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="flex flex-wrap gap-2 justify-center"
-    >
+    <div className="flex flex-wrap gap-2 justify-center animate-fade-in">
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.4s ease-out forwards;
+        }
+      `}</style>
       {displayTags.map((tag) => {
         const isSelected = selectedTag === tag;
         const count = tagCounts[tag] || 0;
         
         return (
-          <motion.button
+          <button
             key={tag}
-            variants={itemVariants}
             onClick={() => handleTagClick(tag)}
             className={`
               px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-              border border-transparent hover:scale-105 active:scale-95
+              border border-transparent hover:scale-105 active:scale-95 animate-fade-in-up
               ${
                 isSelected
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-lg hover:shadow-xl"
+                  : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground hover:shadow-md"
               }
             `}
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: isSelected 
-                ? "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                : "0 4px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+            style={{ 
+              animationDelay: `${tags.indexOf(tag) * 100}ms`,
+              animationFillMode: 'both'
             }}
-            whileTap={{ scale: 0.95 }}
-            layout
           >
             <span className="flex items-center gap-1">
               {tag}
-              <motion.span
+              <span
                 className={`
-                  text-xs px-1.5 py-0.5 rounded-full
+                  text-xs px-1.5 py-0.5 rounded-full transition-all duration-200
                   ${
                     isSelected
                       ? "bg-primary-foreground/20 text-primary-foreground"
                       : "bg-muted-foreground/20 text-muted-foreground"
                   }
                 `}
-                layout
               >
                 {count}
-              </motion.span>
+              </span>
             </span>
-          </motion.button>
+          </button>
         );
       })}
       
       {tags.length > 8 && (
-        <motion.div
-          variants={itemVariants}
-          className="px-4 py-2 text-sm text-muted-foreground flex items-center gap-1"
+        <div
+          className="px-4 py-2 text-sm text-muted-foreground flex items-center gap-1 animate-fade-in-up"
+          style={{ 
+            animationDelay: `${displayTags.length * 100}ms`,
+            animationFillMode: 'both'
+          }}
         >
           <span>+{tags.length - 8} more</span>
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   );
 }

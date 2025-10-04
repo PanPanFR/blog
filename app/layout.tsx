@@ -6,7 +6,6 @@ import { siteConfig } from "@/lib/site";
 import { metadataKeywords } from "./metadata";
 import { SiteNav } from "@/components/site-nav";
 import Footer from "@/components/footer";
-import { PageTransition } from "@/components/page-transition";
 import "@/app/globals.css";
 
 export const viewport: Viewport = {
@@ -42,9 +41,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <SiteNav />
-          <PageTransition>
-            {children}
-          </PageTransition>
+          {children}
           <Footer />
         </ThemeProvider>
       </body>
