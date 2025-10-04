@@ -46,8 +46,8 @@ export function HomePageClient({
   filteredBlogsLength,
 }: HomePageClientProps) {
   return (
-    <div className="min-h-screen bg-background relative">
-      <div className="absolute top-0 left-0 z-0 w-full h-[200px] [mask-image:linear-gradient(to_top,transparent_25%,black_95%)]">
+    <div className="min-h-screen bg-background relative overflow-x-hidden max-w-full">
+      <div className="absolute top-0 left-0 z-0 w-full h-[200px] [mask-image:linear-gradient(to_top,transparent_25%,black_95%)] overflow-hidden">
         <FlickeringGrid
           className="absolute top-0 left-0 size-full"
           squareSize={4}
@@ -58,20 +58,20 @@ export function HomePageClient({
         />
       </div>
       
-      <div className="p-6 border-b border-border flex flex-col gap-6 min-h-[250px] justify-center relative z-10">
-        <div className="max-w-7xl mx-auto w-full">
+      <div className="p-4 md:p-6 border-b border-border flex flex-col gap-6 min-h-[250px] justify-center relative z-10 overflow-x-hidden">
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-0">
           <div className="flex flex-col gap-2">
-            <h1 className="font-medium text-4xl md:text-5xl tracking-tighter">
+            <h1 className="font-medium text-3xl md:text-4xl lg:text-5xl tracking-tighter break-words">
               Magic UI Blog
             </h1>
-            <p className="text-muted-foreground text-sm md:text-base lg:text-lg">
+            <p className="text-muted-foreground text-sm md:text-base lg:text-lg break-words">
               Latest news and updates from Magic UI.
             </p>
           </div>
         </div>
         
         {allTags.length > 0 && (
-          <div className="max-w-7xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full px-4 md:px-0">
             <AnimatedTagFilter
               tags={allTags}
               selectedTag={selectedTag}
@@ -81,11 +81,11 @@ export function HomePageClient({
         )}
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-6 lg:px-0">
+      <div className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-0 overflow-x-hidden">
         <Suspense fallback={<div>Loading articles...</div>}>
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative overflow-hidden border-x border-border ${
-              filteredBlogsLength < 4 ? "border-b" : "border-b-0"
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative overflow-hidden w-full ${
+              filteredBlogsLength < 4 ? "border-b border-border" : ""
             }`}
           >
             {paginatedBlogs.map((blog, index) => {

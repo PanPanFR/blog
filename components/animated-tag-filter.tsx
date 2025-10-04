@@ -32,7 +32,7 @@ export function AnimatedTagFilter({ tags, selectedTag, tagCounts }: AnimatedTagF
   const displayTags = tags.slice(0, 8); // Show max 8 tags
   
   return (
-    <div className="flex flex-wrap gap-2 justify-center animate-fade-in">
+    <div className="flex flex-wrap gap-2 justify-center animate-fade-in overflow-x-hidden max-w-full">
       <style jsx>{`
         @keyframes fadeInUp {
           from {
